@@ -249,13 +249,14 @@ if (CONFIG.cursor === 'glow') {
 //  Music player
 // ═════════════════════════════════════════════════════════════════
 if (CONFIG.music?.enabled && CONFIG.music?.url) {
-  const player  = document.getElementById('music-player');
-  const btn     = document.getElementById('music-btn');
-  const iconPlay= document.getElementById('icon-play');
-  const iconPause=document.getElementById('icon-pause');
-  const titleEl = document.getElementById('music-title-el');
-  const bars    = document.getElementById('music-bars');
-  const audio   = document.getElementById('audio-el');
+  const player    = document.getElementById('music-player');
+  const disc      = document.getElementById('music-disc');
+  const btn       = document.getElementById('music-btn');
+  const iconPlay  = document.getElementById('icon-play');
+  const iconPause = document.getElementById('icon-pause');
+  const titleEl   = document.getElementById('music-title-el');
+  const bars      = document.getElementById('music-bars');
+  const audio     = document.getElementById('audio-el');
 
   audio.src = CONFIG.music.url;
   if (CONFIG.music.title) titleEl.textContent = CONFIG.music.title;
@@ -264,27 +265,23 @@ if (CONFIG.music?.enabled && CONFIG.music?.url) {
 
   let playing = false;
 
+  function setPlaying(state) {
+    playing          = state;
+    iconPlay.hidden  = state;
+    iconPause.hidden = !state;
+    bars.classList.toggle('playing', state);
+    disc.classList.toggle('spinning', state);
+    player.classList.toggle('playing', state);
+  }
+
   btn.addEventListener('click', () => {
     if (!playing) {
-      audio.play().then(() => {
-        playing = true;
-        iconPlay.hidden  = true;
-        iconPause.hidden = false;
-        bars.classList.add('playing');
-      }).catch(() => {});
+      audio.play().then(() => setPlaying(true)).catch(() => {});
     } else {
       audio.pause();
-      playing = false;
-      iconPlay.hidden  = false;
-      iconPause.hidden = true;
-      bars.classList.remove('playing');
+      setPlaying(false);
     }
   });
 
-  audio.addEventListener('ended', () => {
-    playing = false;
-    iconPlay.hidden  = false;
-    iconPause.hidden = true;
-    bars.classList.remove('playing');
-  });
+  audio.addEventListener('ended', () => setPlaying(false));
 }

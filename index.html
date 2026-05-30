@@ -21,16 +21,29 @@
 
   <!-- Music player — shown only when music.enabled = true -->
   <div id="music-player" hidden>
-    <button id="music-btn" title="Play / Pause">
-      <svg id="icon-play"  viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-      <svg id="icon-pause" viewBox="0 0 24 24" fill="currentColor" hidden><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-    </button>
-    <div class="music-info">
+    <!-- Spinning record disc -->
+    <div class="music-disc" id="music-disc">
+      <div class="disc-inner"></div>
+    </div>
+
+    <!-- Title -->
+    <div class="music-body">
+      <span class="music-label">NOW PLAYING</span>
       <span id="music-title-el"></span>
     </div>
-    <div class="music-bars" id="music-bars">
-      <span></span><span></span><span></span><span></span><span></span>
+
+    <!-- Waveform + play button -->
+    <div class="music-right">
+      <div class="music-bars" id="music-bars">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span>
+      </div>
+      <button id="music-btn" title="Play / Pause">
+        <svg id="icon-play"  viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        <svg id="icon-pause" viewBox="0 0 24 24" fill="currentColor" hidden><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+      </button>
     </div>
+
     <audio id="audio-el" loop></audio>
   </div>
 
